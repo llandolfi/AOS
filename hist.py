@@ -45,14 +45,10 @@ if __name__ == "__main__":
 
 	latencies = genfromtxt(sys.argv[1], delimiter=':')
 
-	outputfile = "latencies.png"
-	period = 100000.0
+	period = 100.0
 
 	if sys.argv[3] != None:
 		period = float(sys.argv[3])
-
-	if sys.argv[4]:
-		outputfile = sys.argv[4]
 
 	with open(sys.argv[2]) as fe:
 		content = fe.readlines()
@@ -62,7 +58,6 @@ if __name__ == "__main__":
 	start_epoch = int(events[0][1])
 	events[0][1] = '0'
 
-
 	#t = np.arange(0.1,latencies.shape[0]/10,0.1)
 	x = np.arange(0,latencies.shape[0],1)
 	t = [iter2time(float(period),float(e)) for e in x]
@@ -71,19 +66,25 @@ if __name__ == "__main__":
 
 	ptext = max(s)/1.5
 
-	fig, ax = plt.subplots()
-	ax.plot(t,s)
 
-	ax.set(xlabel='time (seconds)', ylabel='latency (us)', title='Kernel latency with different background workloads')
-	ax.grid()
+	for i,key in enumerate(events):
+		print key
+		if i < len(events)-1:
+			cur_lat = s[int(time2iter(period,int(key[1]))):int(time2iter(period,int(events[i+1][1])))]
+			#print cur_lat
+			c_max = cur_lat.max()
+			c_min = cur_lat.min()
+			c_avg = np.average(cur_lat)
+			c_dev = np.std(cur_lat)
 
-	for key in events:
-		print time2iter(period, float(key[1]))
-		plt.axvline(float(key[1]), color='r')
-		plt.text(float(key[1])-1,ptext,key[0].split('_')[0]+"_"+key[0].split('_')[1],rotation=90)
+			print c_max, c_avg, c_dev
+		else:
+			cur_lat = s[int(time2iter(period,int(key[1]))):s.shape[0]]
+			#print cur_lat
+			c_max = cur_lat.max()
+			c_min = cur_lat.min()
+			c_avg = np.average(cur_lat)
+			c_dev = np.std(cur_lat)
 
-
-	fig.savefig(outputfile)
-	plt.show()
-
+			print c_max, c_avg, c_dev
 

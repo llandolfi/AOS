@@ -15,4 +15,3 @@ taskset -c 11 /bin/ping -l 100000 -q -s 10 -f localhost &
 taskset -c 10 /bin/ping -l 100000 -q -s 10 -f localhost &
 taskset -c 11 /bin/ping -l 100000 -q -s 10 -f localhost &
 
-

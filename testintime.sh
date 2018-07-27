@@ -64,6 +64,22 @@ rm bigfile
 
 echo terminating cpu load
 
+echo starting DU load 
+echo ...
+
+EVENT_START=$(date +%s)
+EVENT_OFF=$((EVENT_START-START)) 
+echo DU_load_start $EVENT_OFF >> $3
+#echo $NUMLINES_B_CPU CPUload_start >> output
+
+./duload.sh > /dev/null 2> /dev/null
+sleep $1
+
+
+pkill -f duload
+
+echo terminating DU load
+
 echo starting I/O load
 echo ... 
 

@@ -11,5 +11,3 @@ while true; do taskset -c 8 tar cvzf test9.tgz  ./linux-stable ; done  &
 while true; do taskset -c 9 tar cvzf test10.tgz  ./linux-stable ; done  &
 while true; do taskset -c 10 tar cvzf test11.tgz  ./linux-stable ; done  &
 while true; do taskset -c 11 tar cvzf test12.tgz  ./linux-stable ; done  &
-while true; do taskset -c 12 tar cvzf test13.tgz  ./linux-stable ; done  &
-while true; do taskset -c 13 tar cvzf test14.tgz  ./linux-stable ; done  &
